@@ -14,8 +14,7 @@ El objetivo es ofrecer soluciones tecnológicas que apoyen la administración de
 - Maven/Gradle
 - Git & GitHub
 
-## 📂 Estructura del proyecto
-
 ##Integrantes
-Anderson Ramirez Gomez
-Marlon Alexis Cortes Cardona
+
+-Anderson Ramirez Gomez
+-Marlon Alexis Cortes Cardona
