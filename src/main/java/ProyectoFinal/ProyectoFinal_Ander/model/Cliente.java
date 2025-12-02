@@ -1,5 +1,6 @@
 package ProyectoFinal.ProyectoFinal_Ander.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
@@ -38,9 +39,11 @@ public class Cliente {
     private String notas;
     
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Contratacion> contrataciones = new ArrayList<>();
     
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Reserva> reservas = new ArrayList<>();
     
     public Cliente() {

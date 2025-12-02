@@ -23,6 +23,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/login", "/register", "/css/**", "/js/**", "/images/**", "/error").permitAll()
+                .requestMatchers("/api/**").permitAll() // Permitir acceso a API REST (temporalmente sin autenticación)
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

@@ -1,0 +1,11 @@
+.layout-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-icon {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+

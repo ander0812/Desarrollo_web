@@ -1,5 +1,6 @@
 package ProyectoFinal.ProyectoFinal_Ander.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.DecimalMin;
@@ -42,6 +43,7 @@ public class ServicioSeguridad {
     private boolean activo = true;
     
     @OneToMany(mappedBy = "servicioSeguridad", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Contratacion> contrataciones = new ArrayList<>();
     
     public ServicioSeguridad() {}

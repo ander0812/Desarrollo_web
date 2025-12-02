@@ -1,5 +1,6 @@
 package ProyectoFinal.ProyectoFinal_Ander.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -37,6 +38,7 @@ public class Contratacion {
     private boolean confirmacionEnviada = false;
     
     @OneToMany(mappedBy = "contratacion", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Pago> pagos = new ArrayList<>();
     
     public Contratacion() {
