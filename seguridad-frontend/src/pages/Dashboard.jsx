@@ -41,7 +41,16 @@ const Dashboard = () => {
       }
     } catch (err) {
       console.error('Error:', err);
-      setError('Error al conectar con el servidor. Asegúrate de que el backend esté corriendo en http://localhost:8080');
+      if (err.response) {
+        // El servidor respondió con un código de error
+        setError(err.response.data?.message || `Error ${err.response.status}: ${err.response.statusText}`);
+      } else if (err.request) {
+        // La petición se hizo pero no hubo respuesta
+        setError('Error al conectar con el servidor. Asegúrate de que el backend esté corriendo en http://localhost:8080');
+      } else {
+        // Error al configurar la petición
+        setError('Error al realizar la petición: ' + err.message);
+      }
     } finally {
       setLoading(false);
     }

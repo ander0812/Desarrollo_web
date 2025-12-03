@@ -1,8 +1,30 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { authService } from '../services/authService';
 import './Layout.css';
 
 const Layout = ({ children }) => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    } finally {
+      localStorage.removeItem('user');
+      navigate('/login');
+    }
+  };
 
   const isActive = (path) => location.pathname === path;
 
@@ -11,13 +33,13 @@ const Layout = ({ children }) => {
       {/* Header */}
       <header className="header">
         <div className="logo">
-          <img src="/logo.svg" alt="Logo" onError={(e) => { e.target.src = '/vite.svg'; }} />
+          <img src="/logo.svg" alt="Logo" />
           <h1>Sistema de Seguridad y Entrenamiento</h1>
         </div>
         <div className="user-info">
           <i className="fas fa-user-circle"></i>
-          <span>Usuario</span>
-          <button className="btn btn-secondary">
+          <span>{user?.nombreCompleto || user?.username || 'Usuario'}</span>
+          <button className="btn btn-secondary" onClick={handleLogout}>
             <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
           </button>
         </div>

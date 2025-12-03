@@ -1,5 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
+import ProtectedRoute from './components/ProtectedRoute';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
 import ClienteForm from './pages/ClienteForm';
@@ -25,51 +29,211 @@ import './index.css';
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+      <Routes>
+        {/* Rutas públicas */}
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        
+        {/* Rutas protegidas */}
+        
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Layout>
+              <Dashboard />
+            </Layout>
+          </ProtectedRoute>
+        } />
           
           {/* Clientes */}
-          <Route path="/clientes" element={<Clientes />} />
-          <Route path="/clientes/nuevo" element={<ClienteForm />} />
-          <Route path="/clientes/editar/:id" element={<ClienteForm />} />
-          <Route path="/clientes/detalle/:id" element={<ClienteDetalle />} />
+          <Route path="/clientes" element={
+            <ProtectedRoute>
+              <Layout>
+                <Clientes />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/clientes/nuevo" element={
+            <ProtectedRoute>
+              <Layout>
+                <ClienteForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/clientes/editar/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <ClienteForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/clientes/detalle/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <ClienteDetalle />
+              </Layout>
+            </ProtectedRoute>
+          } />
           
           {/* Servicios */}
-          <Route path="/servicios" element={<Servicios />} />
-          <Route path="/servicios/nuevo" element={<ServicioForm />} />
-          <Route path="/servicios/editar/:id" element={<ServicioForm />} />
-          <Route path="/servicios/detalle/:id" element={<ServicioDetalle />} />
+          <Route path="/servicios" element={
+            <ProtectedRoute>
+              <Layout>
+                <Servicios />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/servicios/nuevo" element={
+            <ProtectedRoute>
+              <Layout>
+                <ServicioForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/servicios/editar/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <ServicioForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/servicios/detalle/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <ServicioDetalle />
+              </Layout>
+            </ProtectedRoute>
+          } />
           
           {/* Programas */}
-          <Route path="/programas" element={<Programas />} />
-          <Route path="/programas/nuevo" element={<ProgramaForm />} />
-          <Route path="/programas/editar/:id" element={<ProgramaForm />} />
-          <Route path="/programas/detalle/:id" element={<ProgramaDetalle />} />
+          <Route path="/programas" element={
+            <ProtectedRoute>
+              <Layout>
+                <Programas />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/programas/nuevo" element={
+            <ProtectedRoute>
+              <Layout>
+                <ProgramaForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/programas/editar/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <ProgramaForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/programas/detalle/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <ProgramaDetalle />
+              </Layout>
+            </ProtectedRoute>
+          } />
           
           {/* Contrataciones */}
-          <Route path="/contrataciones" element={<Contrataciones />} />
-          <Route path="/contrataciones/nuevo" element={<ContratacionForm />} />
-          <Route path="/contrataciones/editar/:id" element={<ContratacionForm />} />
-          <Route path="/contrataciones/detalle/:id" element={<ContratacionDetalle />} />
+          <Route path="/contrataciones" element={
+            <ProtectedRoute>
+              <Layout>
+                <Contrataciones />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/contrataciones/nuevo" element={
+            <ProtectedRoute>
+              <Layout>
+                <ContratacionForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/contrataciones/editar/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <ContratacionForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/contrataciones/detalle/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <ContratacionDetalle />
+              </Layout>
+            </ProtectedRoute>
+          } />
           
           {/* Reservas */}
-          <Route path="/reservas" element={<Reservas />} />
-          <Route path="/reservas/nuevo" element={<ReservaForm />} />
-          <Route path="/reservas/editar/:id" element={<ReservaForm />} />
-          <Route path="/reservas/detalle/:id" element={<ReservaDetalle />} />
+          <Route path="/reservas" element={
+            <ProtectedRoute>
+              <Layout>
+                <Reservas />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/reservas/nuevo" element={
+            <ProtectedRoute>
+              <Layout>
+                <ReservaForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/reservas/editar/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <ReservaForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/reservas/detalle/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <ReservaDetalle />
+              </Layout>
+            </ProtectedRoute>
+          } />
           
           {/* Pagos */}
-          <Route path="/pagos" element={<Pagos />} />
-          <Route path="/pagos/nuevo" element={<PagoForm />} />
-          <Route path="/pagos/editar/:id" element={<PagoForm />} />
-          <Route path="/pagos/detalle/:id" element={<PagoDetalle />} />
+          <Route path="/pagos" element={
+            <ProtectedRoute>
+              <Layout>
+                <Pagos />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/pagos/nuevo" element={
+            <ProtectedRoute>
+              <Layout>
+                <PagoForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/pagos/editar/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <PagoForm />
+              </Layout>
+            </ProtectedRoute>
+          } />
+          <Route path="/pagos/detalle/:id" element={
+            <ProtectedRoute>
+              <Layout>
+                <PagoDetalle />
+              </Layout>
+            </ProtectedRoute>
+          } />
           
           {/* Informes */}
-          <Route path="/informes" element={<Informes />} />
+          <Route path="/informes" element={
+            <ProtectedRoute>
+              <Layout>
+                <Informes />
+              </Layout>
+            </ProtectedRoute>
+          } />
         </Routes>
-      </Layout>
     </Router>
   );
 }

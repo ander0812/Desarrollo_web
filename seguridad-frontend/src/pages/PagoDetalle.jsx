@@ -141,3 +141,5 @@ const PagoDetalle = () => {
 
 export default PagoDetalle;
 
+
+

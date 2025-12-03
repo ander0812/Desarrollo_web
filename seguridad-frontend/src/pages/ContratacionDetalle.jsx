@@ -165,3 +165,5 @@ const ContratacionDetalle = () => {
 
 export default ContratacionDetalle;
 
+
+
