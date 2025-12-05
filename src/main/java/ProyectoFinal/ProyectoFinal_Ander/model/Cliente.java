@@ -7,43 +7,58 @@ import jakarta.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
 @Table(name = "clientes")
+@Schema(description = "Representa un cliente del sistema")
 public class Cliente {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Identificador único del cliente", example = "1")
     private Long id;
     
     @NotBlank(message = "El nombre es obligatorio")
+    @Schema(description = "Nombre completo del cliente", example = "Juan Pérez")
     private String nombre;
     
+    @Schema(description = "Tipo de cliente (por ejemplo 'Empresa' o 'Particular')", example = "Empresa")
     private String tipoCliente;
     
+    @Schema(description = "Documento de identidad o NIF", example = "12345678A")
     private String documentoIdentidad;
     
     @Email(message = "El email debe ser válido")
+    @Schema(description = "Correo electrónico", example = "cliente@ejemplo.com")
     private String email;
     
+    @Schema(description = "Teléfono de contacto", example = "+34123456789")
     private String telefono;
     
+    @Schema(description = "Dirección postal")
     private String direccion;
     
+    @Schema(description = "Ciudad")
     private String ciudad;
     
+    @Schema(description = "País")
     private String pais;
     
+    @Schema(description = "Fecha de registro en el sistema")
     private LocalDate fechaRegistro;
     
+    @Schema(description = "Notas internas sobre el cliente", nullable = true)
     private String notas;
     
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
+    @Schema(hidden = true)
     private List<Contratacion> contrataciones = new ArrayList<>();
     
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
+    @Schema(hidden = true)
     private List<Reserva> reservas = new ArrayList<>();
     
     public Cliente() {

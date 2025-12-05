@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/reservas")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Reservas", description = "Operaciones sobre reservas")
 public class ReservaRestController {
 
     @Autowired
@@ -24,12 +25,13 @@ public class ReservaRestController {
 
     @GetMapping
     @Transactional(readOnly = true)
+        @io.swagger.v3.oas.annotations.Operation(summary = "Listar reservas", description = "Lista reservas con filtros opcionales")
     public ResponseEntity<ApiResponse<List<Reserva>>> listar(
-            @RequestParam(required = false) String estado,
-            @RequestParam(required = false) Long clienteId,
-            @RequestParam(required = false) Long programaId,
-            @RequestParam(required = false) String fechaInicio,
-            @RequestParam(required = false) String fechaFin) {
+            @io.swagger.v3.oas.annotations.Parameter(description = "Estado de la reserva") @RequestParam(required = false) String estado,
+            @io.swagger.v3.oas.annotations.Parameter(description = "ID del cliente") @RequestParam(required = false) Long clienteId,
+            @io.swagger.v3.oas.annotations.Parameter(description = "ID del programa") @RequestParam(required = false) Long programaId,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Fecha inicio (YYYY-MM-DD)") @RequestParam(required = false) String fechaInicio,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Fecha fin (YYYY-MM-DD)") @RequestParam(required = false) String fechaFin) {
         
         try {
             List<Reserva> reservas;
@@ -68,6 +70,7 @@ public class ReservaRestController {
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Obtener reserva por ID", description = "Obtiene una reserva por su identificador")
     public ResponseEntity<ApiResponse<Reserva>> obtenerPorId(@PathVariable Long id) {
         try {
             Optional<Reserva> reservaOpt = reservaService.buscarPorId(id);
@@ -85,6 +88,7 @@ public class ReservaRestController {
     }
 
     @PostMapping
+    @io.swagger.v3.oas.annotations.Operation(summary = "Crear reserva", description = "Crea una nueva reserva")
     public ResponseEntity<ApiResponse<Reserva>> crear(
             @Valid @RequestBody Reserva reserva,
             BindingResult result) {
@@ -109,6 +113,7 @@ public class ReservaRestController {
     }
 
     @PutMapping("/{id}")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Actualizar reserva", description = "Actualiza una reserva existente")
     public ResponseEntity<ApiResponse<Reserva>> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody Reserva reserva,
@@ -140,6 +145,7 @@ public class ReservaRestController {
     }
 
     @DeleteMapping("/{id}")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Eliminar reserva", description = "Elimina una reserva por su ID")
     public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
         try {
             Optional<Reserva> reservaOpt = reservaService.buscarPorId(id);
@@ -157,6 +163,7 @@ public class ReservaRestController {
     }
 
     @PostMapping("/{id}/cancelar")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Cancelar reserva", description = "Cancela una reserva por su ID")
     public ResponseEntity<ApiResponse<Reserva>> cancelar(@PathVariable Long id) {
         try {
             Reserva reservaCancelada = reservaService.cancelar(id);

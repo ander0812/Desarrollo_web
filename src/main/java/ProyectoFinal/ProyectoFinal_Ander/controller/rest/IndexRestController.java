@@ -10,9 +10,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Index", description = "Información general y endpoints")
 public class IndexRestController {
     
     @GetMapping
+    @io.swagger.v3.oas.annotations.Operation(summary = "Index", description = "Información general de la API y endpoints disponibles")
     public ResponseEntity<Map<String, Object>> index() {
         Map<String, Object> response = new HashMap<>();
         response.put("message", "API REST - Sistema de Seguridad y Entrenamiento");

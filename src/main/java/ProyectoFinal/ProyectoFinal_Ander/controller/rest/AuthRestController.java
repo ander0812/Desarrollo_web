@@ -23,6 +23,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Auth", description = "Operaciones de autenticación y usuarios")
 public class AuthRestController {
 
     @Autowired
@@ -36,6 +37,13 @@ public class AuthRestController {
      * Inicia sesión con usuario y contraseña
      */
     @PostMapping("/login")
+        @io.swagger.v3.oas.annotations.Operation(summary = "Iniciar sesión", description = "Autentica al usuario con username y password")
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Credenciales: {username, password}")
+        @io.swagger.v3.oas.annotations.responses.ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Login exitoso"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Datos inválidos"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Credenciales incorrectas")
+        })
     public ResponseEntity<ApiResponse<Map<String, Object>>> login(
             @RequestBody Map<String, String> credentials,
             HttpServletRequest request) {
@@ -92,6 +100,7 @@ public class AuthRestController {
      * Cierra la sesión del usuario
      */
     @PostMapping("/logout")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Cerrar sesión", description = "Cierra la sesión del usuario autenticado")
     public ResponseEntity<ApiResponse<Void>> logout(HttpServletRequest request, HttpServletResponse response) {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -111,6 +120,11 @@ public class AuthRestController {
      * Obtiene el usuario actual autenticado
      */
     @GetMapping("/current")
+        @io.swagger.v3.oas.annotations.Operation(summary = "Usuario actual", description = "Obtiene información del usuario autenticado")
+        @io.swagger.v3.oas.annotations.responses.ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Usuario obtenido"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "No autenticado")
+        })
     public ResponseEntity<ApiResponse<Map<String, Object>>> getCurrentUser() {
         try {
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -148,6 +162,12 @@ public class AuthRestController {
      * Registra un nuevo usuario
      */
     @PostMapping("/register")
+        @io.swagger.v3.oas.annotations.Operation(summary = "Registrar usuario", description = "Registra un nuevo usuario en el sistema")
+        @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Usuario a registrar")
+        @io.swagger.v3.oas.annotations.responses.ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Usuario registrado"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Errores de validación")
+        })
     public ResponseEntity<ApiResponse<Map<String, Object>>> register(
             @Valid @RequestBody Usuario usuario,
             BindingResult result) {

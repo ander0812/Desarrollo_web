@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/contrataciones")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Contrataciones", description = "Operaciones sobre contrataciones")
 public class ContratacionRestController {
 
     @Autowired
@@ -24,12 +25,13 @@ public class ContratacionRestController {
 
     @GetMapping
     @Transactional(readOnly = true)
+        @io.swagger.v3.oas.annotations.Operation(summary = "Listar contrataciones", description = "Lista contrataciones con filtros opcionales")
     public ResponseEntity<ApiResponse<List<Contratacion>>> listar(
-            @RequestParam(required = false) String estado,
-            @RequestParam(required = false) Long clienteId,
-            @RequestParam(required = false) Long servicioId,
-            @RequestParam(required = false) String fechaInicio,
-            @RequestParam(required = false) String fechaFin) {
+            @io.swagger.v3.oas.annotations.Parameter(description = "Estado de la contratación") @RequestParam(required = false) String estado,
+            @io.swagger.v3.oas.annotations.Parameter(description = "ID del cliente") @RequestParam(required = false) Long clienteId,
+            @io.swagger.v3.oas.annotations.Parameter(description = "ID del servicio") @RequestParam(required = false) Long servicioId,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Fecha inicio (YYYY-MM-DD)") @RequestParam(required = false) String fechaInicio,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Fecha fin (YYYY-MM-DD)") @RequestParam(required = false) String fechaFin) {
         
         try {
             List<Contratacion> contrataciones;
@@ -68,6 +70,7 @@ public class ContratacionRestController {
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Obtener contratación por ID", description = "Obtiene una contratación por su identificador")
     public ResponseEntity<ApiResponse<Contratacion>> obtenerPorId(@PathVariable Long id) {
         try {
             Optional<Contratacion> contratacionOpt = contratacionService.buscarPorId(id);
@@ -85,6 +88,7 @@ public class ContratacionRestController {
     }
 
     @PostMapping
+    @io.swagger.v3.oas.annotations.Operation(summary = "Crear contratación", description = "Crea una nueva contratación")
     public ResponseEntity<ApiResponse<Contratacion>> crear(
             @Valid @RequestBody Contratacion contratacion,
             BindingResult result) {
@@ -109,6 +113,7 @@ public class ContratacionRestController {
     }
 
     @PutMapping("/{id}")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Actualizar contratación", description = "Actualiza una contratación existente")
     public ResponseEntity<ApiResponse<Contratacion>> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody Contratacion contratacion,
@@ -140,6 +145,7 @@ public class ContratacionRestController {
     }
 
     @DeleteMapping("/{id}")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Eliminar contratación", description = "Elimina una contratación por su ID")
     public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
         try {
             Optional<Contratacion> contratacionOpt = contratacionService.buscarPorId(id);
@@ -157,6 +163,7 @@ public class ContratacionRestController {
     }
 
     @PostMapping("/{id}/cancelar")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Cancelar contratación", description = "Cancela una contratación por su ID")
     public ResponseEntity<ApiResponse<Contratacion>> cancelar(@PathVariable Long id) {
         try {
             Contratacion contratacionCancelada = contratacionService.cancelar(id);

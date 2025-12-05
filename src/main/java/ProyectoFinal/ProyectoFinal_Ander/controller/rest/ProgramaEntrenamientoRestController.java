@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/programas")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Programas", description = "Operaciones sobre programas de entrenamiento")
 public class ProgramaEntrenamientoRestController {
 
     @Autowired
@@ -25,13 +26,14 @@ public class ProgramaEntrenamientoRestController {
 
     @GetMapping
     @Transactional(readOnly = true)
+        @io.swagger.v3.oas.annotations.Operation(summary = "Listar programas", description = "Lista programas con filtros opcionales")
     public ResponseEntity<ApiResponse<List<ProgramaEntrenamiento>>> listar(
-            @RequestParam(required = false) String busqueda,
-            @RequestParam(required = false) String instructor,
-            @RequestParam(required = false) String fechaInicio,
-            @RequestParam(required = false) String fechaFin,
-            @RequestParam(required = false) String costoMin,
-            @RequestParam(required = false) String costoMax) {
+            @io.swagger.v3.oas.annotations.Parameter(description = "Texto para búsqueda") @RequestParam(required = false) String busqueda,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Instructor") @RequestParam(required = false) String instructor,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Fecha inicio (YYYY-MM-DD)") @RequestParam(required = false) String fechaInicio,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Fecha fin (YYYY-MM-DD)") @RequestParam(required = false) String fechaFin,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Costo mínimo") @RequestParam(required = false) String costoMin,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Costo máximo") @RequestParam(required = false) String costoMax) {
         
         try {
             List<ProgramaEntrenamiento> programas;
@@ -84,6 +86,7 @@ public class ProgramaEntrenamientoRestController {
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Obtener programa por ID", description = "Obtiene un programa por su identificador")
     public ResponseEntity<ApiResponse<ProgramaEntrenamiento>> obtenerPorId(@PathVariable Long id) {
         try {
             Optional<ProgramaEntrenamiento> programaOpt = programaService.buscarPorId(id);
@@ -101,6 +104,7 @@ public class ProgramaEntrenamientoRestController {
     }
 
     @PostMapping
+    @io.swagger.v3.oas.annotations.Operation(summary = "Crear programa", description = "Crea un nuevo programa de entrenamiento")
     public ResponseEntity<ApiResponse<ProgramaEntrenamiento>> crear(
             @Valid @RequestBody ProgramaEntrenamiento programa,
             BindingResult result) {
@@ -125,6 +129,7 @@ public class ProgramaEntrenamientoRestController {
     }
 
     @PutMapping("/{id}")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Actualizar programa", description = "Actualiza un programa existente")
     public ResponseEntity<ApiResponse<ProgramaEntrenamiento>> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody ProgramaEntrenamiento programa,
@@ -156,6 +161,7 @@ public class ProgramaEntrenamientoRestController {
     }
 
     @DeleteMapping("/{id}")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Eliminar programa", description = "Elimina un programa por su ID")
     public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
         try {
             Optional<ProgramaEntrenamiento> programaOpt = programaService.buscarPorId(id);

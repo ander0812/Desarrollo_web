@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/pagos")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Pagos", description = "Operaciones sobre pagos")
 public class PagoRestController {
 
     @Autowired
@@ -26,15 +27,16 @@ public class PagoRestController {
 
     @GetMapping
     @Transactional(readOnly = true)
+        @io.swagger.v3.oas.annotations.Operation(summary = "Listar pagos", description = "Lista pagos con filtros opcionales")
     public ResponseEntity<ApiResponse<List<Pago>>> listar(
-            @RequestParam(required = false) Long clienteId,
-            @RequestParam(required = false) Long contratacionId,
-            @RequestParam(required = false) String estado,
-            @RequestParam(required = false) String medioPago,
-            @RequestParam(required = false) String fechaInicio,
-            @RequestParam(required = false) String fechaFin,
-            @RequestParam(required = false) String montoMin,
-            @RequestParam(required = false) String montoMax) {
+            @io.swagger.v3.oas.annotations.Parameter(description = "ID del cliente") @RequestParam(required = false) Long clienteId,
+            @io.swagger.v3.oas.annotations.Parameter(description = "ID de la contratación") @RequestParam(required = false) Long contratacionId,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Estado del pago") @RequestParam(required = false) String estado,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Medio de pago") @RequestParam(required = false) String medioPago,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Fecha inicio (YYYY-MM-DD)") @RequestParam(required = false) String fechaInicio,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Fecha fin (YYYY-MM-DD)") @RequestParam(required = false) String fechaFin,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Monto mínimo") @RequestParam(required = false) String montoMin,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Monto máximo") @RequestParam(required = false) String montoMax) {
         
         try {
             List<Pago> pagos;
@@ -90,6 +92,7 @@ public class PagoRestController {
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Obtener pago por ID", description = "Obtiene un pago por su identificador")
     public ResponseEntity<ApiResponse<Pago>> obtenerPorId(@PathVariable Long id) {
         try {
             Optional<Pago> pagoOpt = pagoService.buscarPorId(id);
@@ -107,6 +110,7 @@ public class PagoRestController {
     }
 
     @PostMapping
+    @io.swagger.v3.oas.annotations.Operation(summary = "Crear pago", description = "Registra un nuevo pago")
     public ResponseEntity<ApiResponse<Pago>> crear(
             @Valid @RequestBody Pago pago,
             BindingResult result) {
@@ -131,6 +135,7 @@ public class PagoRestController {
     }
 
     @PutMapping("/{id}")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Actualizar pago", description = "Actualiza un pago existente")
     public ResponseEntity<ApiResponse<Pago>> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody Pago pago,
@@ -162,6 +167,7 @@ public class PagoRestController {
     }
 
     @DeleteMapping("/{id}")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Eliminar pago", description = "Elimina un pago por su ID")
     public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
         try {
             Optional<Pago> pagoOpt = pagoService.buscarPorId(id);
@@ -180,6 +186,7 @@ public class PagoRestController {
 
     @GetMapping("/reconciliacion/{contratacionId}")
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Reconciliar pagos por contratación", description = "Reconciliación de pagos para una contratación específica")
     public ResponseEntity<ApiResponse<Map<String, Object>>> reconciliar(@PathVariable Long contratacionId) {
         try {
             Map<String, Object> resultado = pagoService.reconciliarPagos(contratacionId);
@@ -196,6 +203,7 @@ public class PagoRestController {
 
     @GetMapping("/reconciliacion")
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Reconciliar todos los pagos", description = "Reconciliación de todos los pagos")
     public ResponseEntity<ApiResponse<List<Map<String, Object>>>> reconciliarTodos() {
         try {
             List<Map<String, Object>> resultados = pagoService.reconciliarTodosLosPagos();

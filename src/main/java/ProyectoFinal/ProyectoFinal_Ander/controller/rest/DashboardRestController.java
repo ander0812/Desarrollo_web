@@ -12,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/dashboard")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Dashboard", description = "Resumen y estadísticas del sistema")
 public class DashboardRestController {
 
     @Autowired
@@ -37,6 +38,7 @@ public class DashboardRestController {
 
     @GetMapping
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Datos del dashboard", description = "Obtiene totales y estadísticas del sistema")
     public ResponseEntity<ApiResponse<Map<String, Object>>> getDashboard() {
         try {
             Map<String, Object> datos = new HashMap<>();

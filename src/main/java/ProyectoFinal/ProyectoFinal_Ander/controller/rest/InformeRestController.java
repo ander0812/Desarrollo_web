@@ -13,6 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/informes")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Informes", description = "Generación de informes y métricas")
 public class InformeRestController {
 
     @Autowired
@@ -20,6 +21,7 @@ public class InformeRestController {
 
     @GetMapping("/ingresos")
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Informe de ingresos", description = "Genera informe de ingresos entre dos fechas")
     public ResponseEntity<ApiResponse<Map<String, Object>>> informeIngresos(
             @RequestParam(required = false) String fechaInicio,
             @RequestParam(required = false) String fechaFin) {
@@ -42,6 +44,7 @@ public class InformeRestController {
 
     @GetMapping("/servicios")
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Informe de servicios", description = "Genera informe agregado por servicios")
     public ResponseEntity<ApiResponse<Map<String, Object>>> informeServicios() {
         try {
             Map<String, Object> informe = informeService.generarInformeServicios();
@@ -54,6 +57,7 @@ public class InformeRestController {
 
     @GetMapping("/cursos")
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Informe de cursos", description = "Genera informe para cursos/programas")
     public ResponseEntity<ApiResponse<Map<String, Object>>> informeCursos() {
         try {
             Map<String, Object> informe = informeService.generarInformeCursos();
@@ -66,6 +70,7 @@ public class InformeRestController {
 
     @GetMapping("/frecuencia-contrataciones")
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Frecuencia de contrataciones", description = "Genera informe de frecuencia de contrataciones en un rango")
     public ResponseEntity<ApiResponse<Map<String, Object>>> frecuenciaContrataciones(
             @RequestParam(required = false) String fechaInicio,
             @RequestParam(required = false) String fechaFin) {

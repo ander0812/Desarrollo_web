@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/servicios")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Servicios", description = "Operaciones sobre servicios de seguridad")
 public class ServicioSeguridadRestController {
 
     @Autowired
@@ -24,13 +25,14 @@ public class ServicioSeguridadRestController {
 
     @GetMapping
     @Transactional(readOnly = true)
+        @io.swagger.v3.oas.annotations.Operation(summary = "Listar servicios", description = "Lista servicios con filtros opcionales")
     public ResponseEntity<ApiResponse<List<ServicioSeguridad>>> listar(
-            @RequestParam(required = false) String busqueda,
-            @RequestParam(required = false) String tipo,
-            @RequestParam(required = false) String ubicacion,
-            @RequestParam(required = false) String duracion,
-            @RequestParam(required = false) String precioMin,
-            @RequestParam(required = false) String precioMax) {
+            @io.swagger.v3.oas.annotations.Parameter(description = "Texto para búsqueda") @RequestParam(required = false) String busqueda,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Tipo de servicio") @RequestParam(required = false) String tipo,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Ubicación del servicio") @RequestParam(required = false) String ubicacion,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Duración del servicio") @RequestParam(required = false) String duracion,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Precio mínimo") @RequestParam(required = false) String precioMin,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Precio máximo") @RequestParam(required = false) String precioMax) {
         
         try {
             List<ServicioSeguridad> servicios;
@@ -104,6 +106,7 @@ public class ServicioSeguridadRestController {
 
     @GetMapping("/{id}")
     @Transactional(readOnly = true)
+    @io.swagger.v3.oas.annotations.Operation(summary = "Obtener servicio por ID", description = "Obtiene un servicio por su identificador")
     public ResponseEntity<ApiResponse<ServicioSeguridad>> obtenerPorId(@PathVariable Long id) {
         try {
             Optional<ServicioSeguridad> servicioOpt = servicioService.buscarPorId(id);
@@ -121,6 +124,7 @@ public class ServicioSeguridadRestController {
     }
 
     @PostMapping
+    @io.swagger.v3.oas.annotations.Operation(summary = "Crear servicio", description = "Crea un nuevo servicio de seguridad")
     public ResponseEntity<ApiResponse<ServicioSeguridad>> crear(
             @Valid @RequestBody ServicioSeguridad servicio,
             BindingResult result) {
@@ -145,6 +149,7 @@ public class ServicioSeguridadRestController {
     }
 
     @PutMapping("/{id}")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Actualizar servicio", description = "Actualiza un servicio existente")
     public ResponseEntity<ApiResponse<ServicioSeguridad>> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody ServicioSeguridad servicio,
@@ -176,6 +181,7 @@ public class ServicioSeguridadRestController {
     }
 
     @DeleteMapping("/{id}")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Eliminar servicio", description = "Elimina un servicio por su ID")
     public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
         try {
             Optional<ServicioSeguridad> servicioOpt = servicioService.buscarPorId(id);

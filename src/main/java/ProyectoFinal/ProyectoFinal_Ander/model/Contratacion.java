@@ -6,39 +6,51 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
 @Table(name = "contrataciones")
+@Schema(description = "Representa una contratación de un servicio por un cliente")
 public class Contratacion {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Identificador único de la contratación", example = "1")
     private Long id;
     
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     @NotNull(message = "El cliente es obligatorio")
+    @Schema(description = "Cliente asociado", hidden = true)
     private Cliente cliente;
     
     @ManyToOne
     @JoinColumn(name = "servicio_seguridad_id", nullable = false)
     @NotNull(message = "El servicio de seguridad es obligatorio")
+    @Schema(description = "Servicio de seguridad contratado", hidden = true)
     private ServicioSeguridad servicioSeguridad;
     
+    @Schema(description = "Fecha de inicio", example = "2025-12-01")
     private LocalDate fechaInicio;
     
+    @Schema(description = "Fecha de fin", example = "2025-12-10")
     private LocalDate fechaFin;
     
+    @Schema(description = "Estado de la contratación", example = "PENDIENTE")
     private String estado;
     
+    @Schema(description = "Observaciones internas")
     private String observaciones;
     
+    @Schema(description = "Fecha en que se realizó la contratación")
     private LocalDate fechaContratacion;
     
+    @Schema(description = "Indica si se envió confirmación al cliente")
     private boolean confirmacionEnviada = false;
     
     @OneToMany(mappedBy = "contratacion", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
+    @Schema(hidden = true)
     private List<Pago> pagos = new ArrayList<>();
     
     public Contratacion() {

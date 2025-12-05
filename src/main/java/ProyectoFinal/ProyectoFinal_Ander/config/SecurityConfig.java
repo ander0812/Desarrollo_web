@@ -34,7 +34,14 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource))
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/api/**").permitAll() // Permitir acceso a API REST
+                .requestMatchers(
+                        "/",
+                        "/api/**",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/swagger-ui/index.html"
+                ).permitAll() // Permitir acceso a API REST y documentación OpenAPI/Swagger
                 .anyRequest().authenticated()
             )
             .httpBasic(httpBasic -> {}) // Solo API REST, sin formLogin

@@ -9,47 +9,63 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Entity
 @Table(name = "programas_entrenamiento")
+@Schema(description = "Programa de entrenamiento o curso ofrecido")
 public class ProgramaEntrenamiento {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(description = "Identificador único del programa", example = "1")
     private Long id;
     
     @NotBlank(message = "El nombre del programa es obligatorio")
+    @Schema(description = "Nombre del programa", example = "Curso de Defensa Personal")
     private String nombre;
     
     @NotBlank(message = "El contenido es obligatorio")
     @Column(length = 2000)
+    @Schema(description = "Contenido del programa")
     private String contenido;
     
+    @Schema(description = "Requisitos para el participante")
     private String requisitos;
     
+    @Schema(description = "Instructor a cargo", example = "Carlos Gómez")
     private String instructor;
     
     @DecimalMin(value = "0.0", message = "El costo debe ser mayor o igual a 0")
+    @Schema(description = "Costo del programa", example = "299.99")
     private BigDecimal costo;
     
     @Min(value = 1, message = "La duración debe ser al menos 1 día")
+    @Schema(description = "Duración en días", example = "3")
     private Integer duracionDias;
     
     @Min(value = 1, message = "El cupo debe ser al menos 1")
+    @Schema(description = "Cupo total")
     private Integer cupo;
     
+    @Schema(description = "Cupo disponible")
     private Integer cupoDisponible;
     
+    @Schema(description = "Fecha de inicio del programa", example = "2025-12-01")
     private LocalDate fechaInicio;
     
+    @Schema(description = "Fecha de fin del programa", example = "2025-12-05")
     private LocalDate fechaFin;
     
+    @Schema(description = "Temario resumido")
     private String temario;
     
+    @Schema(description = "Indica si el programa está activo")
     private boolean activo = true;
     
     @OneToMany(mappedBy = "programaEntrenamiento", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
+    @Schema(hidden = true)
     private List<Reserva> reservas = new ArrayList<>();
     
     public ProgramaEntrenamiento() {}

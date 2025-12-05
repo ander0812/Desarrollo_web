@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/clientes")
+@io.swagger.v3.oas.annotations.tags.Tag(name = "Clientes", description = "Operaciones sobre clientes")
 public class ClienteRestController {
 
     @Autowired
@@ -37,13 +38,17 @@ public class ClienteRestController {
      */
     @GetMapping
     @Transactional(readOnly = true)
+        @io.swagger.v3.oas.annotations.Operation(summary = "Listar clientes", description = "Lista clientes con filtros opcionales")
+        @io.swagger.v3.oas.annotations.responses.ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Clientes obtenidos exitosamente")
+        })
     public ResponseEntity<ApiResponse<List<Cliente>>> listar(
-            @RequestParam(required = false) String busqueda,
-            @RequestParam(required = false) String tipoCliente,
-            @RequestParam(required = false) String ciudad,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String telefono,
-            @RequestParam(required = false) String documento) {
+            @io.swagger.v3.oas.annotations.Parameter(description = "Texto para búsqueda") @RequestParam(required = false) String busqueda,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Filtrar por tipo de cliente") @RequestParam(required = false) String tipoCliente,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Filtrar por ciudad") @RequestParam(required = false) String ciudad,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Filtrar por email") @RequestParam(required = false) String email,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Filtrar por teléfono") @RequestParam(required = false) String telefono,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Filtrar por documento") @RequestParam(required = false) String documento) {
 
         try {
             List<Cliente> clientes;
@@ -76,6 +81,11 @@ public class ClienteRestController {
      * Obtiene un cliente por su ID
      */
     @GetMapping("/{id}")
+        @io.swagger.v3.oas.annotations.Operation(summary = "Obtener cliente por ID", description = "Obtiene un cliente y sus relaciones básicas")
+        @io.swagger.v3.oas.annotations.responses.ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Cliente obtenido exitosamente"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Cliente no encontrado")
+        })
     public ResponseEntity<ApiResponse<Map<String, Object>>> obtenerPorId(@PathVariable Long id) {
         try {
             Optional<Cliente> clienteOpt = clienteService.buscarPorId(id);
@@ -103,6 +113,11 @@ public class ClienteRestController {
      * Crea un nuevo cliente
      */
     @PostMapping
+        @io.swagger.v3.oas.annotations.Operation(summary = "Crear cliente", description = "Crea un nuevo cliente en el sistema")
+        @io.swagger.v3.oas.annotations.responses.ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "Cliente creado exitosamente"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Errores de validación en el cuerpo")
+        })
     public ResponseEntity<ApiResponse<Cliente>> crear(
             @Valid @RequestBody Cliente cliente,
             BindingResult result) {
@@ -131,6 +146,12 @@ public class ClienteRestController {
      * Actualiza un cliente existente
      */
     @PutMapping("/{id}")
+        @io.swagger.v3.oas.annotations.Operation(summary = "Actualizar cliente", description = "Actualiza los datos de un cliente existente")
+        @io.swagger.v3.oas.annotations.responses.ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Cliente actualizado exitosamente"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Errores de validación"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Cliente no encontrado")
+        })
     public ResponseEntity<ApiResponse<Cliente>> actualizar(
             @PathVariable Long id,
             @Valid @RequestBody Cliente cliente,
@@ -166,6 +187,11 @@ public class ClienteRestController {
      * Elimina un cliente
      */
     @DeleteMapping("/{id}")
+        @io.swagger.v3.oas.annotations.Operation(summary = "Eliminar cliente", description = "Elimina un cliente por su ID")
+        @io.swagger.v3.oas.annotations.responses.ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Cliente eliminado exitosamente"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Cliente no encontrado")
+        })
     public ResponseEntity<ApiResponse<Void>> eliminar(@PathVariable Long id) {
         try {
             Optional<Cliente> clienteOpt = clienteService.buscarPorId(id);
