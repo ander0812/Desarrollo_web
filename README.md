@@ -93,6 +93,19 @@ mvnw.cmd spring-boot:run    # Windows
 
 **Backend disponible en:** `http://localhost:8080`
 
+#### OpenAPI / Swagger UI
+
+Una vez que el backend esté ejecutándose, puedes acceder a la documentación interactiva de la API:
+
+- **Swagger UI (Documentación interactiva):** `http://localhost:8080/swagger-ui/index.html`
+- **OpenAPI JSON (Especificación):** `http://localhost:8080/v3/api-docs`
+
+En Swagger UI puedes:
+- Ver todos los endpoints disponibles
+- Leer descripciones y ejemplos
+- Probar los endpoints directamente
+- Ver esquemas de solicitud/respuesta
+
 #### 3. Configuración Frontend (React)
 
 ```bash
