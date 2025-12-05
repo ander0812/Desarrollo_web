@@ -27,17 +27,152 @@
     --gray: #95a5a6;
     --shadow: rgba(0, 0, 0, 0.1);
     --shadow-lg: rgba(0, 0, 0, 0.15);
+    /* Surface & text variables for better contrast control */
+    --bg-color: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --text-color: #1f2937; /* dark slate */
+    --surface: #ffffff;
+    --sidebar-bg: linear-gradient(180deg, var(--dark-color) 0%, #34495e 100%);
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: var(--bg-color);
     background-attachment: fixed;
-    color: #333;
+    color: var(--text-color);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     line-height: 1.6;
+}
+
+/* Dark theme: toggled by adding the class `dark` to the <html> element */
+html.dark {
+    --primary-color: #0f172a;
+    --primary-light: #0b1220;
+    --secondary-color: #f59e0b;
+    --secondary-dark: #d97706;
+    --success-color: #16a34a;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --info-color: #0ea5a4;
+    --dark-color: #e6eef6; /* used as text in cards */
+    --light-color: #0b1220; /* backgrounds */
+    --white: #0b1220;
+    --gray: #9ca3af;
+    --shadow: rgba(0, 0, 0, 0.5);
+    --shadow-lg: rgba(0, 0, 0, 0.6);
+    --bg-color: linear-gradient(135deg, #071024 0%, #0f172a 100%);
+    --text-color: #e6eef6;
+    --surface: #0b1220;
+    --sidebar-bg: linear-gradient(180deg, #071124 0%, #0b1220 100%);
+}
+
+/* Surfaces use --surface and text use --text-color for consistent contrast */
+.card,
+.login-card,
+.mv-card,
+.service-card,
+table,
+.search-bar,
+.stat-card {
+    background: var(--surface);
+    color: var(--text-color);
+}
+
+.sidebar {
+    background: var(--sidebar-bg);
+}
+
+/* Header & footer use surface variants */
+.header,
+.footer {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    color: var(--white);
+}
+
+/* Ensure buttons and links remain readable */
+.btn,
+.footer a,
+.sidebar a {
+    color: inherit;
+}
+
+/* Style for the fixed theme toggle in Home page */
+.theme-toggle-home {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 2000;
+}
+
+.theme-toggle-btn {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+    backdrop-filter: blur(6px);
+    background: rgba(255,255,255,0.95);
+    color: var(--primary-color);
+    border: 1px solid rgba(0,0,0,0.06);
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 220ms ease;
+}
+
+html.dark .theme-toggle-btn {
+    background: rgba(255,255,255,0.06);
+    color: var(--text-color);
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+.theme-toggle-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.24);
+}
+
+/* Smooth transition for color/background changes */
+html, body, .layout-container, .card, .sidebar, .header, .footer, .content, .btn {
+    transition: background-color 220ms ease, color 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+}
+
+html.dark body {
+    background: linear-gradient(135deg, #071024 0%, #0f172a 100%);
+    color: #e6eef6;
+}
+
+/* Cards and surfaces for dark */
+html.dark .card,
+html.dark .login-card,
+html.dark .mv-card,
+html.dark .service-card,
+html.dark table,
+html.dark .search-bar {
+    background: #0b1220;
+    color: #e6eef6;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+
+html.dark .sidebar {
+    background: linear-gradient(180deg, #071124 0%, #0b1220 100%);
+}
+
+html.dark .header,
+html.dark .footer {
+    background: linear-gradient(135deg, #07203a 0%, #0b1220 100%);
+}
+
+html.dark .btn-secondary {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    color: #e6eef6;
+}
+
+/* Smooth transitions when toggling */
+html, body, .layout-container, .card, .sidebar, .header, .footer, .content {
+    transition: background 250ms ease, color 250ms ease, box-shadow 250ms ease;
 }
 
 .layout-container {
@@ -287,6 +422,11 @@ tbody tr:hover {
     color: white;
 }
 
+html.dark .btn-primary {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+    color: #ffffff;
+}
+
 .btn-success {
     background: linear-gradient(135deg, var(--success-color) 0%, #229954 100%);
     color: white;
@@ -441,6 +581,14 @@ tbody tr:hover {
     color: var(--primary-light);
 }
 
+html.dark .form-group label {
+    color: #ffffff;
+}
+
+html.dark .form-group label i {
+    color: #f39c12;
+}
+
 /* Login Page */
 .login-container {
     display: flex;
@@ -483,6 +631,34 @@ tbody tr:hover {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+html.dark .login-card {
+    background: rgba(11, 18, 32, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+html.dark .login-card label {
+    color: #ffffff;
+}
+
+html.dark .login-card input,
+html.dark .login-card .form-control {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+html.dark .login-card input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+html.dark .login-card input:focus,
+html.dark .login-card .form-control:focus {
+    border-color: #2a5298;
+    box-shadow: 0 0 0 4px rgba(42, 82, 152, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+}
+
 .login-card h2 {
     text-align: center;
     margin-bottom: 2rem;
@@ -493,6 +669,12 @@ tbody tr:hover {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+}
+
+html.dark .login-card h2 {
+    color: #ffffff;
+    background: none;
+    -webkit-text-fill-color: unset;
 }
 
 .login-card .logo {

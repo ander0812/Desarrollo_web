@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
+import { initTheme, toggleTheme, getTheme } from '../utils/theme';
 
 const Home = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [theme, setTheme] = useState('light');
   const [isVisible, setIsVisible] = useState({});
   const [counters, setCounters] = useState({
     clientes: 0,
@@ -20,7 +22,15 @@ const Home = () => {
   useEffect(() => {
     const user = localStorage.getItem('user');
     setIsLoggedIn(!!user);
+    // Initialize theme
+    initTheme();
+    setTheme(getTheme());
   }, []);
+
+  const handleToggleTheme = () => {
+    const newTheme = toggleTheme();
+    if (newTheme) setTheme(newTheme);
+  };
 
   // Intersection Observer para animaciones al hacer scroll
   useEffect(() => {
@@ -99,6 +109,18 @@ const Home = () => {
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-white dark:bg-gray-900 transition-colors duration-300">
+      {/* Fixed theme toggle in top-right corner */}
+      <div className="theme-toggle-home" role="region" aria-label="Control de tema">
+        <button
+          className="theme-toggle-btn"
+          onClick={handleToggleTheme}
+          title="Cambiar tema"
+          aria-label="Cambiar tema"
+        >
+          <i className={theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun'}></i>
+        </button>
+      </div>
+
       {/* Hero Section */}
       <header className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-700 to-orange-500 dark:from-gray-900 dark:via-blue-900 dark:to-gray-800 opacity-90"></div>
@@ -151,6 +173,7 @@ const Home = () => {
                   <i className="fas fa-user-plus"></i>
                   <span>Crear Cuenta</span>
                 </Link>
+                {/* Theme toggle moved to header; removed from hero */}
               </>
             )}
           </div>

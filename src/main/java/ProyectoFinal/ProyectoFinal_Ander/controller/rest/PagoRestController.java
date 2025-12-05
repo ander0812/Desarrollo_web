@@ -19,7 +19,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/pagos")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5173"})
 public class PagoRestController {
 
     @Autowired

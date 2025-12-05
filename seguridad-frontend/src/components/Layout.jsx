@@ -2,11 +2,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { authService } from '../services/authService';
 import './Layout.css';
+import { initTheme, toggleTheme, getTheme } from '../utils/theme';
 
 const Layout = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -14,6 +16,17 @@ const Layout = ({ children }) => {
       setUser(JSON.parse(userData));
     }
   }, []);
+
+  // Theme init: only read saved preference from localStorage
+  useEffect(() => {
+    initTheme();
+    setTheme(getTheme());
+  }, []);
+
+  const handleToggleTheme = () => {
+    const newTheme = toggleTheme();
+    if (newTheme) setTheme(newTheme);
+  };
 
   const handleLogout = async () => {
     try {
@@ -39,6 +52,14 @@ const Layout = ({ children }) => {
         <div className="user-info">
           <i className="fas fa-user-circle"></i>
           <span>{user?.nombreCompleto || user?.username || 'Usuario'}</span>
+          <button
+            className="btn btn-sm btn-secondary theme-btn-header"
+            onClick={handleToggleTheme}
+            title="Cambiar tema"
+            aria-label="Cambiar tema"
+          >
+            <i className={theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun'}></i>
+          </button>
           <button className="btn btn-secondary" onClick={handleLogout}>
             <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
           </button>
