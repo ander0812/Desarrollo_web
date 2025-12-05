@@ -24,7 +24,8 @@ public class CorsConfig implements WebMvcConfigurer {
                     "http://127.0.0.1:5173",
                     "http://127.0.0.1:3000",
                     "https://*.vercel.app",
-                    "https://*.railway.app"
+                    "https://*.railway.app",
+                    "https://desarrolloweb-production.up.railway.app"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .allowedHeaders("*")
@@ -42,13 +43,14 @@ public class CorsConfig implements WebMvcConfigurer {
             "http://127.0.0.1:5173",
             "http://127.0.0.1:3000",
             "https://*.vercel.app",
-            "https://*.railway.app"
+            "https://*.railway.app",
+            "https://desarrolloweb-production.up.railway.app"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
-        
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", configuration);
         return source;
