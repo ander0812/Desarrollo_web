@@ -42,6 +42,7 @@ public class CorsConfig implements WebMvcConfigurer {
             "http://localhost:5174",
             "http://127.0.0.1:5173",
             "http://127.0.0.1:3000",
+            "https://desarrollowebor.vercel.app",
             "https://*.vercel.app",
             "https://*.railway.app",
             "https://desarrolloweb-production.up.railway.app"
