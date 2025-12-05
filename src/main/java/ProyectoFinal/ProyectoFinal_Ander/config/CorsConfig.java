@@ -22,7 +22,9 @@ public class CorsConfig implements WebMvcConfigurer {
                     "http://localhost:5173",
                     "http://localhost:5174",
                     "http://127.0.0.1:5173",
-                    "http://127.0.0.1:3000"
+                    "http://127.0.0.1:3000",
+                    "https://*.vercel.app",
+                    "https://*.railway.app"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 .allowedHeaders("*")
@@ -38,9 +40,9 @@ public class CorsConfig implements WebMvcConfigurer {
             "http://localhost:5173",
             "http://localhost:5174",
             "http://127.0.0.1:5173",
-            "http://127.0.0.1:3000"
-            // Agregar aquí tu URL de Vercel cuando despliegues:
-            // "https://tu-app.vercel.app"
+            "http://127.0.0.1:3000",
+            "https://*.vercel.app",
+            "https://*.railway.app"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
