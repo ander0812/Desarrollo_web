@@ -114,10 +114,10 @@ const Home = () => {
         <button
           className="theme-toggle-btn"
           onClick={handleToggleTheme}
-          title="Cambiar tema"
-          aria-label="Cambiar tema"
+          title="Cambiar tema (Claro/Oscuro)"
+          aria-label="Cambiar tema (Claro/Oscuro)"
         >
-          <i className={theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun'}></i>
+          {theme === 'dark' ? '🌙' : '☀️'}
         </button>
       </div>
 
@@ -152,7 +152,7 @@ const Home = () => {
             {isLoggedIn ? (
               <Link 
                 to="/dashboard" 
-                className="px-10 py-4 rounded-lg bg-white dark:bg-gray-800 text-blue-900 dark:text-white font-semibold text-lg shadow-lg hover:shadow-xl hover:bg-blue-50 dark:hover:bg-gray-700 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/50 dark:focus:ring-gray-500/50 transition-all duration-300 flex items-center justify-center gap-2 min-w-[200px]"
+                className="px-10 py-4 rounded-lg bg-white dark:bg-blue-600 text-blue-900 dark:text-blue-900 font-semibold text-lg shadow-lg hover:shadow-xl hover:bg-blue-50 dark:hover:bg-blue-700 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/50 dark:focus:ring-blue-400/50 transition-all duration-300 flex items-center justify-center gap-2 min-w-[200px]"
               >
                 <i className="fas fa-tachometer-alt"></i>
                 <span>Ir al Dashboard</span>

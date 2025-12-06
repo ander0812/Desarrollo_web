@@ -55,10 +55,10 @@ const Layout = ({ children }) => {
           <button
             className="btn btn-sm btn-secondary theme-btn-header"
             onClick={handleToggleTheme}
-            title="Cambiar tema"
-            aria-label="Cambiar tema"
+            title="Cambiar tema (Claro/Oscuro)"
+            aria-label="Cambiar tema (Claro/Oscuro)"
           >
-            <i className={theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun'}></i>
+            {theme === 'dark' ? '🌙' : '☀️'}
           </button>
           <button className="btn btn-secondary" onClick={handleLogout}>
             <i className="fas fa-sign-out-alt"></i> Cerrar Sesión
