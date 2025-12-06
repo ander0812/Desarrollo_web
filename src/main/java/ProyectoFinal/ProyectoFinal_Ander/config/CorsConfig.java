@@ -24,6 +24,7 @@ public class CorsConfig implements WebMvcConfigurer {
                     "http://127.0.0.1:5173",
                     "http://127.0.0.1:3000",
                     "https://desarrollowebor.vercel.app",
+                    "https://desarrollowebdef.vercel.app",
                     "https://*.railway.app",
                     "https://desarrolloweb-production.up.railway.app"
                 )
@@ -43,6 +44,7 @@ public class CorsConfig implements WebMvcConfigurer {
             "http://127.0.0.1:5173",
             "http://127.0.0.1:3000",
             "https://desarrollowebor.vercel.app",
+            "https://desarrollowebdef.vercel.app",
             "https://*.vercel.app",
             "https://*.railway.app",
             "https://desarrolloweb-production.up.railway.app"
